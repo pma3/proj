@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 let initialState = {
   categoryID: 0,
   sortType: { sortType: "rating", sortName: "популярности (ASC)" },
+  type: 0,
 };
 
 let pizzasSlice = createSlice({
