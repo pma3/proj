@@ -1,7 +1,41 @@
-function Sort() {
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSortType } from "../redux/pizzasDisplaySlice";
 
-    return (
-      <div className="sort">
+function Sort() {
+  //REDUX LOGIC
+  let dispatch = useDispatch();
+  let sortType = useSelector((state) => state.pizzasSlice.sortType);
+
+  //POP-UP
+  let [popup, setPopup] = useState(false);
+  let funcPopup = (obj) => {
+    dispatch(setSortType(obj));
+    setPopup(false);
+  };
+  let popup_ref = useRef();
+  useEffect(() => {
+    let clickOutside = (event) => {
+      if (!event.composedPath().includes(popup_ref.current)) {
+        setPopup(false);
+      }
+    };
+    document.body.addEventListener("click", clickOutside);
+    return () => document.body.removeEventListener("click", clickOutside);
+  }, []);
+
+  //SORT LIST
+  let sortList = [
+    { sortType: "rating", sortName: "популярности (ASC)" },
+    { sortType: "-rating", sortName: "популярности (DESC)" },
+    { sortType: "price", sortName: "цене (ASC)" },
+    { sortType: "-price", sortName: "цене (DESC)" },
+    { sortType: "title", sortName: "алфавиту (ASC)" },
+    { sortType: "-title", sortName: "алфавиту (DESC)" },
+  ];
+
+  return (
+    <div className="sort" ref={popup_ref}>
       <div className="sort__label">
         <svg
           width="10"
@@ -16,17 +50,25 @@ function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span>популярности</span>
+        <span onClick={() => setPopup(!popup)}>{sortType.sortName}</span>
       </div>
-      <div className="sort__popup">
-        <ul>
-          <li className="active">популярности</li>
-          <li>цене</li>
-          <li>алфавиту</li>
-        </ul>
-      </div>
+      {popup && (
+        <div className="sort__popup">
+          <ul>
+            {sortList.map((obj) => (
+              <li
+                onClick={() => funcPopup(obj)}
+                className={sortType.sortType === obj.sortType ? "active" : ""}
+                key={obj.sortType}
+              >
+                {obj.sortName}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
-    )
-  }
+  );
+}
 
-export default Sort
+export default Sort;
