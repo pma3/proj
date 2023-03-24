@@ -1,9 +1,9 @@
-import logoSvg from "../assets/img/pizza-logo.svg"
+import logoSvg from "../assets/img/pizza-logo.svg";
+import Search from "./Search";
 
 function Header() {
-
-    return(
-      <div className="header">
+  return (
+    <div className="header">
       <div className="container">
         <div className="header__logo">
           <img width="38" src={logoSvg} alt="Pizza logo" />
@@ -12,6 +12,7 @@ function Header() {
             <p>самая вкусная пицца во вселенной</p>
           </div>
         </div>
+        <Search />
         <div className="header__cart">
           <a href="/cart.html" className="button button--cart">
             <span>520 ₽</span>
@@ -50,7 +51,7 @@ function Header() {
         </div>
       </div>
     </div>
-    )
-  }
+  );
+}
 
-  export default Header
+export default Header;

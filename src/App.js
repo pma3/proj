@@ -11,6 +11,7 @@ function App() {
   //OBTAINING REDUX STATES
   let categoryID = useSelector((state) => state.pizzasSlice.categoryID);
   let sortType = useSelector((state) => state.pizzasSlice.sortType);
+  let searched = useSelector((state) => state.pizzasSlice.searched);
 
   //FILTERING LOGIC
   let [items, setItems] = useState([]);
@@ -25,10 +26,10 @@ function App() {
                 sortType.sortType.includes("-") ? "desc" : "asc"
               }`
             : ""
-        }`
+        }${searched ? `&search=${searched}` : ""}`
       )
       .then((res) => setItems(res.data));
-  }, [categoryID, sortType]);
+  }, [categoryID, sortType, searched]);
 
   return (
     <div className="wrapper">

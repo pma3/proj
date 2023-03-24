@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 let initialState = {
   categoryID: 0,
   sortType: { sortType: "rating", sortName: "популярности (ASC)" },
-  type: 0,
+  searched: "",
 };
 
 let pizzasSlice = createSlice({
@@ -16,9 +16,12 @@ let pizzasSlice = createSlice({
     setSortType(state, action) {
       state.sortType = action.payload;
     },
+    setSearched(state, action) {
+      state.searched = action.payload;
+    },
   },
 });
 
-export let { setCategoryID, setSortType } = pizzasSlice.actions;
+export let { setCategoryID, setSortType, setSearched } = pizzasSlice.actions;
 
 export default pizzasSlice.reducer;
